@@ -1,22 +1,41 @@
-const express = require('express')
-const app = express()
+const express = require('express');
+const hbs = require('hbs');
+
+const app = express();
 const port = 8080;
+
+//handlebars
+app.set('view engine', 'hbs');
+hbs.registerPartials(__dirname + '/views/partials');
 
 //middleware
 // Servir contenido estatico
 app.use( express.static('public') );
 
+
 //navegacion entre paginas
 // app.get('/',  (req, res) => {
 //   res.send('Home page');
 // });
+app.get('/',  (req, res) => {
+    res.render('home', {
+        nombre: 'Matias',
+        titulo: 'Curso de node'
+    });
+});
 
 app.get('/generic',  (req, res) => {
-    res.sendFile(__dirname + '/public/generic.html');
+    res.render('generic', {
+        nombre: 'generic',
+        titulo: 'Pagina '
+    });
 });
 
 app.get('/elements',  (req, res) => {
-    res.sendFile(__dirname + '/public/elements.html');
+    res.render('elements', {
+        nombre: 'elements',
+        titulo: 'Pagina '
+    });
 });
 
 //peticion get que muestra mensage de not found '*'
